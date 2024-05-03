@@ -8,6 +8,8 @@ const jugar=form.elements["jugar"]
 const digitalBoard=[]
 const board = document.getElementById("board");
 let playerTurn=1
+let win=false
+let quantity=0
 const playerTurnMessage=document.getElementById("playerTurn")
 playerTurnMessage.textContent=`${player1.value} is your turn`
 
@@ -20,6 +22,98 @@ playerTurnMessage.textContent=`${player1.value} is your turn`
 // form.forEach(element => {
 //   switch  
 // });
+
+let count
+// function verticalUp(player,row,column){
+//   console.log(`verticalUp ${count}`)
+//   console.log(`${digitalBoard[row][column]===player}`)
+//   if(digitalBoard[row][column]===player){
+//     count=count++
+//     if(count<4 && row>0){
+//       verticalUp(player,row-1,column)
+//     }
+//   }
+  
+// }
+
+
+
+function verticalDown(player,row,column){
+  if(digitalBoard[row][column]===player){
+    count++
+    if(count<4 && row<(parseInt(rows.value)-1)){
+      verticalDown(player,row+1,column)
+    }
+  }
+  
+}
+function vertical(player,row,column){
+  count=1
+  if(row<(parseInt(rows.value)-1)){
+    verticalDown(player,row+1,column)
+  }
+  if(count==4){
+    return true
+  } else {
+    return false
+  }
+  
+}
+
+function horizontalRight(player,row,column){
+  console.log(count,row,column,player,digitalBoard[row][column] )
+  console.log(`${digitalBoard[row][column]===player}`)
+  if(digitalBoard[row][column]===player){
+    count++
+    console.log(count)
+    if(count<4 && column<(parseInt(column.value)-1)){
+      horizontalRight(player,row,column+1)
+    }
+  }  
+}
+
+
+function horizontalLeft(player,row,column){
+  console.log(count,row,column,player,digitalBoard[row][column] )
+  console.log(`${digitalBoard[row][column]===player}`)
+  if(digitalBoard[row][column]===player){
+    count++
+    console.log(count)
+    if(count<4 && column>0){
+      horizontalLeft(player,row,column-1)
+    }
+  }  
+}
+
+function horizontal(player,row,column){
+  count=1
+  if(column<(parseInt(columns.value)-1)){
+    horizontalRight(player,row,column+1)
+  }
+  if(column>0 && count<4){
+    horizontalLeft(player,row,column-1)
+  }
+  if(count==4){
+    return true
+  } else {
+    return false
+  }
+}
+
+
+function playerWin(player,row,column){
+  //vertical
+  if(vertical(player,row,column)){
+    return true
+  } else if(horizontal(player,row,column)){
+    return true
+  } /*else if(slash(player,row,column)){
+    return true
+  } else if(backslash(player,row,column)){
+    return true
+  }  */return false
+
+}
 
 function play(event){
 event.preventDefault()
@@ -45,7 +139,7 @@ for (let i=0; i<parseInt(rows.value); i++){
     // space.style.height=auto
     // table.appendChild(space);
     digitalBoard[i][j]=0
-    console.log(`${i} ${j}`)
+    //console.log(`${i} ${j}`)
   }
   mytable.appendChild(line)
 }
@@ -59,12 +153,9 @@ form.addEventListener('submit',play)
 
 function movement(event){
   event.preventDefault()
-  
-  //console.log( event.target)
+  quantity++
   columnPosition=parseInt(event.target.id[0])
 
- console.log(columnPosition)
- console.log(digitalBoard)
 //let foundspace=-1
  for(let j=digitalBoard.length-1;j>=0;j--){
   if(digitalBoard[j][columnPosition]===0){
@@ -73,8 +164,9 @@ function movement(event){
     if(playerTurn==1)
     {digitalBoard[j][columnPosition]=1
       markCoin.style.backgroundColor="yellow"
-      if(playerWin()){
+      if(playerWin(parseInt(playerTurn),parseInt(j),parseInt(columnPosition))){
         playerTurnMessage.textContent=`${player1.value} you win`
+        board.removeEventListener('click',movement)
         return
       } else {
         playerTurn=2
@@ -83,8 +175,9 @@ function movement(event){
     } else {
       digitalBoard[j][columnPosition]=2
       markCoin.style.backgroundColor="red"
-      if(playerWin()){
-        playerTurnMessage.textContent=`${player1.value} you win`
+      if(playerWin(parseInt(playerTurn),parseInt(j),parseInt(columnPosition))){
+        playerTurnMessage.textContent=`${player2.value} you win`
+        board.removeEventListener('click',movement)
         return
       } else {
       playerTurn=1
