@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conect 4 DOM</title>
+  <script defer src="script.js"></script>
+    <!-- Font Awesome for Icons -->
+    <script
+      src="https://kit.fontawesome.com/d8f052c6cf.js"
+      crossorigin="anonymous"
+    ></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h1>CONECT 4</h1>
+
+  <form id="setup">
+    <span class="input-icon"><i class="fa-solid fa-arrows-left-right"></i></i></span>        
+    <input type="number" min="4" max="7" style="width: 200px;" name="columns" id="columns" placeholder="Number of Columns"><br />
+    <span class="input-icon"><i class="fa-solid fa-arrows-up-down"></i></span> 
+    <input type="number" min="4" max="7" style="width: 200px;" name="rows" id="rows" placeholder="Number of Rows"><br />
+    <span class="input-icon"><i class="fa-solid fa-user"></i></span>
+    <input type="text" minlength="3" name="player1" id="player1" placeholder="Player1">
+    <br />
+    <span class="input-icon"><i class="fa-solid fa-user"></i></span>
+    <input type="text" minlength="3" name="player2" id="player2"  placeholder="Player2">
+    <br />
+    <input type="submit" value="Jugar">
+
+  </form>
+
+  <div id="board">
+  </div>
+</body>
+</html>
