@@ -5,7 +5,7 @@ const rows=form.elements["rows"]
 const player1=form.elements["player1"]
 const player2=form.elements["player2"]
 const jugar=form.elements["jugar"]
-
+const digitalBoard=[]
 const board = document.getElementById("board");
 
 //const player1coin='<div class="coin" id="player1coin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm96-112h-8V360l55.3 0c-3.8 22.7-23.6 40-47.3 40zm47.3-56L344 344V304h8c23.8 0 43.5 17.3 47.3 40zM328 344H264V304h64v40zm0 56H264V360h64v40zm-80-96v40l-64 0V304h64zm0 56v40H184V360l64 0zm-80-16H112.7c3.8-22.7 23.6-40 47.3-40h8v40zm0 56h-8c-23.8 0-43.5-17.3-47.3-40H168v40zM144.4 208a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm192-32a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/></svg> </div>' 
@@ -23,7 +23,7 @@ event.preventDefault()
 jugar.disabled=true
 
 const table = document.createDocumentFragment();
-const digitalBoard=[]
+
 const mytable=document.createElement("table")
 for (let i=0; i<parseInt(rows.value); i++){
   digitalBoard[i]=[]
@@ -57,7 +57,17 @@ function movement(event){
   event.preventDefault()
   //console.log( event.target)
   columnPosition=parseInt(event.target.id[0])
+
  console.log(columnPosition)
+ console.log(digitalBoard)
+//let foundspace=-1
+ for(let j=digitalBoard.length-1;j>=0;j--){
+  if(digitalBoard[j][columnPosition]===0){
+    digitalBoard[j][columnPosition]=1
+    break
+  }
+ }
+
 }
 
 board.addEventListener('click',movement)
