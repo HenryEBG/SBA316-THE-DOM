@@ -59,6 +59,7 @@ form.addEventListener('submit',play)
 
 function movement(event){
   event.preventDefault()
+  
   //console.log( event.target)
   columnPosition=parseInt(event.target.id[0])
 
@@ -67,16 +68,28 @@ function movement(event){
 //let foundspace=-1
  for(let j=digitalBoard.length-1;j>=0;j--){
   if(digitalBoard[j][columnPosition]===0){
-
+    const markCoin =document.getElementById(`${columnPosition}${j}`)
     digitalBoard[j][columnPosition]=1
     if(playerTurn==1)
     {digitalBoard[j][columnPosition]=1
-      playerTurn=2
-      playerTurnMessage.textContent=`${player2.value} is your turn`
+      markCoin.style.backgroundColor="yellow"
+      if(playerWin()){
+        playerTurnMessage.textContent=`${player1.value} you win`
+        return
+      } else {
+        playerTurn=2
+        playerTurnMessage.textContent=`${player2.value} is your turn`
+      }
     } else {
       digitalBoard[j][columnPosition]=2
+      markCoin.style.backgroundColor="red"
+      if(playerWin()){
+        playerTurnMessage.textContent=`${player1.value} you win`
+        return
+      } else {
       playerTurn=1
       playerTurnMessage.textContent=`${player1.value} is your turn`
+      }
     } 
 
     break
