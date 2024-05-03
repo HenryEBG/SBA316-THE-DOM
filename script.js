@@ -6,7 +6,7 @@ const player1=form.elements["player1"]
 const player2=form.elements["player2"]
 const jugar=form.elements["jugar"]
 const digitalBoard=[]
-const board = document.getElementById("board");
+const board = document.querySelector("#board");
 let playerTurn=1
 let win=false
 let quantity=0
@@ -206,7 +206,7 @@ for (let i=0; i<parseInt(rows.value); i++){
     space.setAttribute('id',`${j}${i}`)
     line.appendChild(space)
     
-    space.textContent=`${i} ${j}`
+    //space.textContent=`${i} ${j}`
     // space.classList.add('space')
     // space.style.width=(100/parseInt(columns.value)).toString()+"%"
     // space.style.height=auto
@@ -238,25 +238,33 @@ function movement(event){
     {digitalBoard[j][columnPosition]=1
       markCoin.style.backgroundColor="yellow"
       if(playerWin(parseInt(playerTurn),parseInt(j),parseInt(columnPosition))){
-        playerTurnMessage.textContent=`${player1.value} you win`
+        alert(`${player1.value} you win`)
+        playerTurnMessage.textContent=""
         board.removeEventListener('click',movement)
         return
       } else {
         playerTurn=2
+        setTimeout
         playerTurnMessage.textContent=`${player2.value} is your turn`
       }
     } else {
       digitalBoard[j][columnPosition]=2
       markCoin.style.backgroundColor="red"
-      if(playerWin(parseInt(playerTurn),parseInt(j),parseInt(columnPosition))){
-        playerTurnMessage.textContent=`${player2.value} you win`
+      if(playerWin(parseInt(playerTurn),parseInt(j),parseInt(columnPosition))){ 
+       alert(`${player2.value} you win`)
+       playerTurnMessage.textContent=""
         board.removeEventListener('click',movement)
+     
         return
       } else {
       playerTurn=1
       playerTurnMessage.textContent=`${player1.value} is your turn`
       }
     } 
+
+    if(quantity==parseInt(rows.value)*parseInt(columns.value)){
+      alert("Tied Game")
+    }
 
     break
   }
