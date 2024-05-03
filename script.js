@@ -74,11 +74,8 @@ function horizontalRight(player,row,column){
 
 
 function horizontalLeft(player,row,column){
-  console.log(count,row,column,player,digitalBoard[row][column] )
-  console.log(`${digitalBoard[row][column]===player}`)
   if(digitalBoard[row][column]===player){
     count++
-    console.log(count)
     if(count<4 && column>0){
       horizontalLeft(player,row,column-1)
     }
@@ -100,6 +97,82 @@ function horizontal(player,row,column){
   }
 }
 
+function slashUp(player,row,column){
+  if(digitalBoard[row][column]===player){
+    count++
+    if(count<4 && column<(parseInt(columns.value)-1) && row>0){
+      slashUp(player,row-1,column+1)
+    }
+  }   
+}
+
+function slashDown(player,row,column){
+  if(digitalBoard[row][column]===player){
+    count++
+    if(count<4 && row<(parseInt(rows.value)-1) && column>0){
+      slashDown(player,row+1,column-1)
+    }
+  }   
+}
+
+function slash(player,row,column){
+  count=1
+  if(column<(parseInt(columns.value)-1) && row>0){
+    slashUp(player,row-1,column+1)
+  }
+  if(column>0 && row<(parseInt(rows.value)-1) && count<4){
+    slashDown(player,row+1,column-1)
+  }
+  if(count==4){
+    return true
+  } else {
+    return false
+  }
+}
+
+
+function backSlashUp(player,row,column){
+  console.log(count,row,column,player,digitalBoard[row][column] )
+  console.log(`${digitalBoard[row][column]===player}`)
+  if(digitalBoard[row][column]===player){
+    count++
+    console.log(count)
+    if(count<4 && column>0 && row>0){
+      backSlashUp(player,row-1,column-1)
+    }
+  }   
+}
+
+function backSlashDown(player,row,column){
+  console.log(count,row,column,player,digitalBoard[row][column] )
+  console.log(`${digitalBoard[row][column]===player}`)
+  if(digitalBoard[row][column]===player){
+    count++
+    console.log(count)
+    if(count<4 && row<(parseInt(rows.value)-1) && column<(parseInt(columns.value)-1)){
+      backSlashDown(player,row+1,column+1)
+    }
+  }   
+}
+
+function backSlash(player,row,column){
+  count=1
+  if(column>0 && row>0){
+    backSlashUp(player,row-1,column-1)
+  }
+  if(column<(parseInt(columns.value)-1) && row<(parseInt(rows.value)-1) && count<4){
+    backSlashDown(player,row+1,column+1)
+  }
+  if(count==4){
+    return true
+  } else {
+    return false
+  }
+}
+
+
+
+
 
 function playerWin(player,row,column){
   //vertical
@@ -107,11 +180,11 @@ function playerWin(player,row,column){
     return true
   } else if(horizontal(player,row,column)){
     return true
-  } /*else if(slash(player,row,column)){
+  } else if(slash(player,row,column)){
     return true
-  } else if(backslash(player,row,column)){
+  } else if(backSlash(player,row,column)){
     return true
-  }  */return false
+  }  return false
 
 }
 
