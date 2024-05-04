@@ -16,27 +16,28 @@
   <h1>CONECT 4</h1>
 
   <form id="setup">
-    <span class="input-icon"><i class="fa-solid fa-arrows-left-right"></i></i></span>        
-    <input type="number" min="4" max="7" style="width: 200px;" name="columns" id="columns" placeholder="Number of Columns"><br />
-    <span class="input-icon"><i class="fa-solid fa-arrows-up-down"></i></span> 
-    <input type="number" min="4" max="7" style="width: 200px;" name="rows" id="rows" placeholder="Number of Rows"><br />
-    <span class="input-icon"><i class="fa-solid fa-user"></i></span>
-    <input type="text" minlength="3" name="player1" id="player1" placeholder="Player1">
-    <br />
-    <span class="input-icon"><i class="fa-solid fa-user"></i></span>
-    <input type="text" minlength="3" name="player2" id="player2"  placeholder="Player2">
-    <br />
-    <input type="submit" name="jugar" value="Jugar">
+    
+    <!-- Requirement # 13 Include at least one form and/or input with HTML attribute validation. -->
+    <input type="number" min="4" max="7" required  name="columns" id="columns" placeholder="Number of Columns between (4-7)">
+    
+    <input type="number" min="4" max="7" required name="rows" id="rows" placeholder="Number of Rows between (4-7)">
+    
+    <input type="text" minlength="3" required name="player1" id="player1" placeholder="Player Yellow (name-only letters)">
+    
+    
+    <input type="text" minlength="3" required name="player2" id="player2"  placeholder="Player Red (name-only letters)">
+    
+    <input type="submit" id="jugar" name="jugar" value="Jugar">
+    <input type="button" name="reiniciar" value="Reiniciar" style="display:none">
 
   </form>
 
-  <div id="playerTurn" style="display: none;">
+  <div id="playerTurn">
 
   </div>
 
-  <div id="result">
-
-  </div>
+  <h2 id="result">
+  </h2>
 
   <div id="board">
   </div>
