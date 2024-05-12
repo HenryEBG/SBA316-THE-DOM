@@ -1,8 +1,15 @@
+
 /**************************************************
  * 
  *             4 CONECT  GAME
  * 
  ****************************************************/
+
+//validate winings in every direction
+import { vertical } from './vertical.js';
+import { horizontal } from './horizontal.js';
+import { slash } from './slash.js';
+import { backSlash } from './backslash.js';
 
 /************************************************
  * Declaring variables to use in the project
@@ -53,159 +60,21 @@ let quantity = 0
 const playerTurnMessage = document.getElementById("playerTurn")
 //playerTurnMessage.textContent = `${player1.value} is your turn`
 
-//variable to count # of coins in a row/column/diagonal
-let count
-
-//counts how many coins are vertically down recursively
-function verticalDown(player, row, column) {
-  if (digitalBoard[row][column] === player) {
-    count++
-    if (count < 4 && row < (parseInt(rows.value) - 1)) {
-      verticalDown(player, row + 1, column)
-    }
-  }
-}
-
-//function that return if are a vertical winning combination
-function vertical(player, row, column) {
-  count = 1
-  if (row < (parseInt(rows.value) - 1)) {
-    verticalDown(player, row + 1, column)
-  }
-  if (count == 4) {
-    return true
-  } else {
-    return false
-  }
-
-}
-
-//function that count coins to the right horizontalle 
-//of the actual coin 
-function horizontalRight(player, row, column) {
-  
-  if (digitalBoard[row][column] === player) {
-    count++
-  
-    if (count < 4 && column < (parseInt(column.value) - 1)) {
-      horizontalRight(player, row, column + 1)
-    }
-  }
-}
-
-//function that count coins to the left horizontally
-//of the actual coin
-function horizontalLeft(player, row, column) {
-  if (digitalBoard[row][column] === player) {
-    count++
-    if (count < 4 && column > 0) {
-      horizontalLeft(player, row, column - 1)
-    }
-  }
-}
-
-//function that return true if there are a combination
-//horizontally
-function horizontal(player, row, column) {
-  count = 1
-  if (column < (parseInt(columns.value) - 1)) {
-    horizontalRight(player, row, column + 1)
-  }
-  if (column > 0 && count < 4) {
-    horizontalLeft(player, row, column - 1)
-  }
-  if (count == 4) {
-    return true
-  } else {
-    return false
-  }
-}
-
-//function that count in diagonal from the position up
-function slashUp(player, row, column) {
-  if (digitalBoard[row][column] === player) {
-    count++
-    if (count < 4 && column < (parseInt(columns.value) - 1) && row > 0) {
-      slashUp(player, row - 1, column + 1)
-    }
-  }
-}
-
-//function that count in diagonal form the position down
-function slashDown(player, row, column) {
-  if (digitalBoard[row][column] === player) {
-    count++
-    if (count < 4 && row < (parseInt(rows.value) - 1) && column > 0) {
-      slashDown(player, row + 1, column - 1)
-    }
-  }
-}
-
-//function that returns if there is a combination 4 
-//diagonally
-function slash(player, row, column) {
-  count = 1
-  if (column < (parseInt(columns.value) - 1) && row > 0) {
-    slashUp(player, row - 1, column + 1)
-  }
-  if (column > 0 && row < (parseInt(rows.value) - 1) && count < 4) {
-    slashDown(player, row + 1, column - 1)
-  }
-  if (count == 4) {
-    return true
-  } else {
-    return false
-  }
-}
-
-//function that count coins from the actual up left
-function backSlashUp(player, row, column) {
-  if (digitalBoard[row][column] === player) {
-    count++
-    if (count < 4 && column > 0 && row > 0) {
-      backSlashUp(player, row - 1, column - 1)
-    }
-  }
-}
 
 
-//function count coints form the actual down right
-function backSlashDown(player, row, column) {
-  if (digitalBoard[row][column] === player) {
-    count++
-    if (count < 4 && row < (parseInt(rows.value) - 1) && column < (parseInt(columns.value) - 1)) {
-      backSlashDown(player, row + 1, column + 1)
-    }
-  }
-}
 
 
-//functions that returns if there a combination in backslash
-function backSlash(player, row, column) {
-  count = 1
-  if (column > 0 && row > 0) {
-    backSlashUp(player, row - 1, column - 1)
-  }
-  if (column < (parseInt(columns.value) - 1) && row < (parseInt(rows.value) - 1) && count < 4) {
-    backSlashDown(player, row + 1, column + 1)
-  }
-  if (count == 4) {
-    return true
-  } else {
-    return false
-  }
-}
 
 //function that verify if there is a 4 line form in anyway
 function playerWin(player, row, column) {
   //vertical
-  if (vertical(player, row, column)) {
+  if (vertical(player, row, column,digitalBoard)) {
     return true
-  } else if (horizontal(player, row, column)) {
+  } else if (horizontal(player, row, column,digitalBoard)) {
     return true
-  } else if (slash(player, row, column)) {
+  } else if (slash(player, row, column,digitalBoard)) {
     return true
-  } else if (backSlash(player, row, column)) {
+  } else if (backSlash(player, row, column,digitalBoard)) {
     return true
   } return false
 
@@ -217,7 +86,7 @@ function playerWin(player, row, column) {
 function movement(event) {
   event.preventDefault()
   quantity++
-  columnPosition = parseInt(event.target.id[0])
+  let columnPosition = parseInt(event.target.id[0])
   for (let j = digitalBoard.length - 1; j >= 0; j--) {
     if (digitalBoard[j][columnPosition] === 0) {
       const markCoin = document.getElementById(`${columnPosition}${j}`)
