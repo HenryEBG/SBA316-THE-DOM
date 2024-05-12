@@ -60,11 +60,6 @@ let quantity = 0
 const playerTurnMessage = document.getElementById("playerTurn")
 //playerTurnMessage.textContent = `${player1.value} is your turn`
 
-
-
-
-
-
 //function that verify if there is a 4 line form in anyway
 function playerWin(player, row, column) {
   //vertical
@@ -133,7 +128,6 @@ function movement(event) {
      ****************************************************************/        
         alert("Tied Game")
       }
-
       break
     }
   }
